@@ -1,0 +1,59 @@
+# deploy.yml: put the hospital demos online on the StellaXafe Cloudflare account.
+#
+# Why: Anthony, 2026-11-27: the key lives in GitHub's own secrets, "in case
+# I'm using a different agent on a different session". Any agent pushes to
+# main; this job deploys. It can also be started by hand (Actions, Deploy).
+#
+# Secrets (repository Settings, Secrets and variables, Actions):
+#   CLOUDFLARE_API_TOKEN   the "stellaxafe-demos deploy" key (Workers edit,
+#                          stellaxafe.com DNS edit), StellaXafe account only
+#   CLOUDFLARE_ACCOUNT_ID  the StellaXafe account ID
+#
+# Never: print a secret, or deploy anything but the files in this repository.
+name: Deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+concurrency: deploy
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      # 1. Until both secrets are saved there is nothing to deploy to: say so and stop green.
+      - name: Are the secrets saved?
+        id: ready
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "The Cloudflare secrets are not saved yet, so nothing was deployed."
+            echo "go=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=yes" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.ready.outputs.go == 'yes'
+      - uses: actions/setup-node@v4
+        if: steps.ready.outputs.go == 'yes'
+        with:
+          node-version: 22
+      # 2. Deploy the Worker and every demo folder.
+      - name: Deploy
+        if: steps.ready.outputs.go == 'yes'
+        run: npx --yes wrangler@4 deploy
+      # 3. Check each address answers before calling it done (a new address can take a few minutes).
+      - name: Check the demos answer
+        if: steps.ready.outputs.go == 'yes'
+        run: |
+          for url in https://mascap-web.stellaxafe.com/; do
+            ok=no
+            for i in $(seq 1 30); do
+              if curl -fsS -o /dev/null "$url"; then ok=yes; break; fi
+              sleep 10
+            done
+            echo "$url answered: $ok"
+            [ "$ok" = yes ] || exit 1
+          done
