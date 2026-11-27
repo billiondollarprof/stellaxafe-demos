@@ -18,6 +18,9 @@
     "directory": "sites",
     "binding": "ASSETS",
     "run_worker_first": true,
+    // The Worker asks for ".../index.html" itself, so Cloudflare must hand
+    // it over as is, not redirect it to a tidier address (that looped).
+    "html_handling": "none",
   },
   "workers_dev": true,
   "routes": [
