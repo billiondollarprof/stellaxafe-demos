@@ -321,3 +321,4 @@ footer b{color:var(--gd);letter-spacing:.22em}
 .brand img{border-radius:50%;background:#fff}
 .rc>span{background:linear-gradient(transparent,rgba(4,10,30,.55) 25%,rgba(4,10,30,.95))!important;padding-top:46px!important}
 #dv .cc{transform:translateY(16px);transition:transform .4s var(--e)}#dv.on .cc{transform:none}
+footer .by{display:inline-block;margin-top:6px;opacity:.8;letter-spacing:.02em}

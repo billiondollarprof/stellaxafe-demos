@@ -29,6 +29,9 @@ read that humanizer"). It lives in the Rhema repository at
   Demos are for the hospital we pitch, not for Google.
 - **Say it is a demo.** The footer says "Concept demo prepared for ... Not the
   official website". Sample videos say so when played. Photos are samples.
+- **Our footprint, small, at the bottom of everything** (Anthony,
+  2026-11-27): a website says "Website designed by StellaXafe Technologies
+  Limited"; an app says "Powered by StellaXafe Technologies Limited".
 - **Real public facts only** for the hospital itself: its name, logo,
   addresses, phone numbers and its real public reviews, quoted as written.
   Never a real patient.
