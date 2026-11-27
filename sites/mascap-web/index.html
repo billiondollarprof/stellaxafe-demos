@@ -1,0 +1,207 @@
+<!doctype html>
+<!--
+  sites/mascap-web/index.html: the concept website StellaXafe made to show
+  MASCAP Hospitals, Sapele (request 262, Anthony, 2026-11-27).
+
+  Why: MASCAP asked for a demo. The layout comes from the Olympus concept
+  site Anthony built (the moving highlight, the scroll scenes, the ring),
+  with Rhema's card stack for the departments.
+
+  Never: show a patient, a real record or a real testimonial video. The
+  sample videos say they are samples when played. Real Google reviews only,
+  as written on Google. The page stays out of search engines (noindex).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MASCAP Hospitals Sapele</title>
+<meta name="description" content="MASCAP Hospitals, Sapele, Delta State: consultation, laboratory, pharmacy and nursing care. Concept demo by StellaXafe.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1b3d">
+<link rel="icon" href="/i/logo-128.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" media="(orientation:landscape)" href="/i/reception.webp" fetchpriority="high"><link rel="preload" as="image" media="(orientation:portrait)" href="/i/reception-p.webp" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/a/site.css">
+</head>
+<body>
+<div id="pg"></div>
+<header><div class="hd">
+ <a class="brand" href="#top" aria-label="MASCAP Hospitals home"><img src="/i/logo-128.webp" width="46" height="46" alt="MASCAP Hospitals logo"><span class="bt"><span class="bn">MASCAP</span><em>Hospitals · Sapele, Delta State</em><span class="bp"><i data-i="phone"></i>0806 591 1940</span></span></a>
+ <nav class="dn" aria-label="Main"><a href="#departments">Departments</a><a href="#visit">Your visit</a><a href="#book">Book</a><a href="#reviews">Reviews</a><a href="#stories">Stories</a><a href="#contact">Contact</a></nav>
+ <a class="btn hide" href="#book">Book an appointment</a>
+ <button class="ib" id="th" aria-label="Switch between light and dark mode"><svg class="sn" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="mo" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+ <button class="ib" id="mb" aria-label="Menu" aria-expanded="false" aria-controls="mn"><i></i><i></i><i></i></button>
+</div></header>
+<div id="sh"></div>
+<div id="mn" role="dialog" aria-label="Menu">
+ <a style="--i:0" href="#departments">Departments</a><a style="--i:1" href="#visit">Your visit</a><a style="--i:2" href="#book">Book an appointment</a><a style="--i:3" href="#reviews">Reviews</a><a style="--i:4" href="#stories">Patient stories</a><a style="--i:5" href="#ask">Ask MASCAP</a><a style="--i:6" href="#contact">Contact</a>
+ <a class="btn" style="--i:7" href="#book">Book an appointment</a><a class="btn o" style="--i:8" href="tel:+2348065911940" data-call>Call the hospital</a>
+</div>
+
+<main id="top">
+<!-- ===== 1. Hero: photo slideshow under two moving lines ===== -->
+<section class="hero">
+ <div class="hs" id="hs"><picture class="on"><source media="(orientation:portrait)" srcset="/i/reception-p.webp"><img src="/i/reception.webp" alt="" fetchpriority="high" decoding="async"></picture></div>
+ <div class="lyr" id="ly1"><span class="orb a"></span><span class="orb b"></span></div>
+ <div class="lyr" id="ly2">
+  <svg class="cv" viewBox="0 0 2880 90" preserveAspectRatio="none" fill="none" stroke="rgba(255,190,200,.75)" stroke-width="2"><path d="M0 45Q360 0 720 45T1440 45T2160 45T2880 45"/></svg>
+  <svg class="cv b" viewBox="0 0 2880 90" preserveAspectRatio="none" fill="none" stroke="rgba(150,175,240,.75)" stroke-width="2"><path d="M0 45Q360 90 720 45T1440 45T2160 45T2880 45"/></svg>
+ </div>
+ <svg class="wv" viewBox="0 0 2880 90" preserveAspectRatio="none"><path d="M0 40Q360 -5 720 40T1440 40T2160 40T2880 40V90H0Z" fill="var(--bg)"/></svg>
+ <div class="in" id="hin">
+  <span class="pill"><i></i><span>Adeola Road and Egbokodo Road, Sapele</span></span>
+  <h1>Good care,<br><span class="gt">close to home.</span></h1>
+  <i class="rb"></i>
+  <p class="lead">Doctors, nurses, a laboratory and a pharmacy under one roof, for you and your family in Sapele.</p>
+  <div class="cta"><div class="spl"><a class="btn" href="#book" data-b="Consultation">Book an appointment</a><button class="car" id="svb" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="sv" aria-label="Choose what to book"><svg viewBox="0 0 12 12" fill="currentColor"><path d="M1 3.5h10L6 9.5z"/></svg></button></div><a class="btn gh" href="https://wa.me/2348133993514?text=Hello%20MASCAP%20Hospitals%2C%20I%20would%20like%20to%20ask%20a%20question." target="_blank" rel="noopener"><i data-i="wa"></i>Chat on WhatsApp</a></div>
+ </div>
+ <div class="seg" id="sg"></div>
+ <span class="grain"></span>
+</section>
+
+<!-- ===== 2. Quick actions ===== -->
+<div class="qa">
+ <a class="q tl3" href="#book"><span class="ic"><i data-i="cal"></i></span><span><b>Book an appointment</b><small>Pick a day and a time</small></span></a>
+ <a class="q cl tl3" href="tel:+2348065911940" data-call><span class="ic"><i data-i="phone"></i></span><span><b>Call the hospital</b><small>0806 591 1940</small></span></a>
+ <a class="q tl3" href="https://wa.me/2348133993514" target="_blank" rel="noopener"><span class="ic"><i data-i="wa"></i></span><span><b>WhatsApp the manager</b><small>0813 399 3514</small></span></a>
+ <a class="q ig tl3" href="https://www.facebook.com/share/1AQ1zNgZQc/" target="_blank" rel="noopener"><span class="ic"><i data-i="fb"></i></span><span><b>Facebook</b><small>Mascap Hospitals</small></span></a>
+</div>
+<div class="mq" id="m1"></div><div class="mq r" id="m2"></div>
+
+<!-- ===== 3. About: two photos layered, with the reviews badge ===== -->
+<section id="about" class="w two">
+ <div class="stackd rv">
+  <div class="im"><img class="px" data-s=".12" src="/i/corridor.webp" alt="Doctors and a nurse walking through a bright hospital corridor" style="object-position:center 30%" loading="lazy" decoding="async"></div>
+  <div class="fl2 px" data-s="-.18"><img src="/i/bp-s.webp" alt="A nurse checking a patient's blood pressure" loading="lazy" decoding="async"></div>
+  <div class="fl"><b>G</b><span><small>Reviewed on Google</small><small>by patients in Sapele</small></span></div>
+ </div>
+ <div class="rv" style="--d:.1s">
+  <h2 class="hl">A hospital Sapele already knows.</h2>
+  <p class="lead">MASCAP Hospitals has its head office at 34 Adeola Road and a branch on Egbokodo Road. You can see a doctor, have your tests done and collect your medicine without going anywhere else.</p>
+  <div class="ft">
+   <div><span class="ic"><i data-i="steth"></i></span><span><b>Doctors and nurses you can talk to</b><br><small class="mu">They explain what is happening and what comes next.</small></span></div>
+   <div><span class="ic"><i data-i="lab"></i></span><span><b>Tests done on site</b><br><small class="mu">The laboratory is in the same building as the doctor.</small></span></div>
+   <div><span class="ic"><i data-i="pill"></i></span><span><b>A pharmacy at the door</b><br><small class="mu">Collect your medicine before you leave.</small></span></div>
+  </div>
+  <span class="tag">Concept content. Services to confirm with MASCAP.</span>
+ </div>
+</section>
+
+<!-- ===== 4. Departments: Rhema's card stack ===== -->
+<section id="departments" class="fan"><div class="w">
+ <span class="ey rv">Departments</span>
+ <h2 class="hl rv">What we do.</h2>
+ <p class="lead rv">Tap a card to bring it forward, then tap Book.</p>
+ <div class="deck" id="dk"></div><div class="dots" id="dt"></div>
+</div></section>
+
+<!-- ===== 5. Your visit: the scenes change as you scroll ===== -->
+<section id="visit" class="scrub" aria-label="A visit to MASCAP">
+ <div class="stage" id="stage">
+  <img class="ly" src="/i/reception.webp" alt="" loading="lazy" decoding="async">
+  <img class="ly" src="/i/triage.webp" alt="" loading="lazy" decoding="async">
+  <img class="ly" src="/i/consult.webp" alt="" loading="lazy" decoding="async" style="object-position:center 30%">
+  <img class="ly" src="/i/lab2.webp" alt="" loading="lazy" decoding="async">
+  <img class="ly" src="/i/pharmacy.webp" alt="" loading="lazy" decoding="async" style="object-position:40% center">
+  <div class="sc L-left"><em>Step 1</em><h3>Arrive at the front desk.</h3><p>We open your card or make a new one in a few minutes.</p></div>
+  <div class="sc L-right"><em>Step 2</em><h3>Your vital signs.</h3><p>A nurse checks your temperature, blood pressure and weight.</p></div>
+  <div class="sc L-lower"><em>Step 3</em><h3>See the doctor.</h3><p>Take your time. Ask every question you have.</p></div>
+  <div class="sc L-center mask"><em>Step 4</em><h3>The laboratory</h3></div>
+  <div class="sc L-upper"><em>Step 5</em><h3>Collect your medicine.</h3><p>The pharmacy is on your way out.</p></div>
+  <i class="wl" id="wl"></i>
+  <div class="hud"><small>A visit to MASCAP</small><div class="cnt"><b id="cn">01</b><i> / 05</i></div></div>
+  <div class="hint" id="hint"><i></i>Keep scrolling</div>
+  <div class="tl" id="tl"><div><i></i>Arrive</div><div><i></i>Vitals</div><div><i></i>Doctor</div><div><i></i>Lab</div><div><i></i>Pharmacy</div></div>
+  <span class="grain"></span>
+ </div>
+</section>
+
+<!-- ===== 6. Book an appointment in four steps ===== -->
+<section id="book" class="w">
+ <h2 class="hl rv">Book in four steps.</h2>
+ <p class="lead rv">When you finish, WhatsApp opens with your request written out for the hospital. You can also <a href="tel:+2348065911940" data-call style="color:var(--gd);font-weight:700">call the hospital</a>.</p>
+ <div class="bk rv">
+  <div class="sp" id="sp"><i></i><i></i><i></i><i></i></div>
+  <div class="pn" data-s="0"><h3>What would you like to book?</h3><div class="chs" id="bt"></div><h3 style="margin-top:8px">Which branch?</h3><div class="chs" id="bg"></div></div>
+  <div class="pn" data-s="1"><h3>Pick a day and a time</h3><div class="g2"><div><label for="dd">Date</label><input id="dd" type="date"></div><div><label for="tm">Time of day</label><select id="tm"><option selected>Morning</option><option>Afternoon</option><option>Evening</option></select></div></div></div>
+  <div class="pn" data-s="2"><h3>Your details</h3><div class="g2"><div><label for="nm">Full name</label><input id="nm" autocomplete="name"></div><div><label for="ph">Phone number</label><input id="ph" type="tel" autocomplete="tel" placeholder="0803 000 0000"></div><div style="grid-column:1/-1"><label for="nt">Anything the doctor should know? (optional)</label><input id="nt" placeholder="For example: a follow up visit, or for my child"></div></div></div>
+  <div class="pn" data-s="3"><h3>Check your request</h3><div class="sm" id="smr"></div></div>
+  <p id="er" role="alert" style="margin-top:10px"></p>
+  <div class="nv" id="nv"><button class="btn o" id="bkb">Back</button><button class="btn" id="go">Continue</button></div>
+  <div id="ok" hidden><svg class="ck" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="26" cy="26" r="23"/><path d="M15 27l8 8 14-16"/></svg><h3>Request ready</h3><p class="mu" style="margin:6px 0 10px">Reference</p><code id="rf"></code><p class="mu" style="margin-top:12px">WhatsApp has opened with your request. The hospital will confirm your time.</p></div>
+ </div>
+ <span class="tag">Demo: requests go to WhatsApp. The MASCAP hospital app can take bookings directly.</span>
+</section>
+
+<!-- ===== 7. Real Google reviews, one at a time ===== -->
+<section id="reviews" class="w" style="padding-top:0"><div class="rvw">
+ <div><h2 class="hl rv">What patients say.</h2>
+  <div class="gr rv"><div class="rt"><b>G</b><span><span class="stt">★★★★★</span><br><small class="mu">Reviews on Google</small></span></div>
+  <a class="btn o" href="https://share.google/Wi2GyAlLNoAPE2Poi" target="_blank" rel="noopener"><span class="gg">G</span>Read on Google</a></div></div>
+ <div><div class="rst">
+  <article class="rcd"><div class="rh"><span class="av">C</span><span><b>Charles A.</b><small>2 years ago</small></span><span class="gg">G</span></div><div class="stt">★★★★★</div><p>"Excellent. Mascape Hospital is home for quality medical care with highly trained medical professionals."</p></article>
+  <article class="rcd"><div class="rh"><span class="av">T</span><span><b>Tewan N.</b><small>5 years ago</small></span><span class="gg">G</span></div><div class="stt">★★★★★</div><p>"It's a hospital that smells like home with over 4 qualified doctors on duty and amazing nurses, good working equipment and facilities."</p></article>
+  <article class="rcd"><div class="rh"><span class="av">K</span><span><b>Kenneth A.</b><small>2 years ago</small></span><span class="gg">G</span></div><div class="stt">★★★★★</div><p>"Best place for treatment."</p></article>
+  <article class="rcd"><div class="rh"><span class="av">R</span><span><b>Robinson U.</b><small>Local Guide · 2 years ago</small></span><span class="gg">G</span></div><div class="stt">★★★★☆</div><p>"A place where you can receive good health care services."</p></article>
+  <article class="rcd"><div class="rh"><span class="av">W</span><span><b>Wairhe E.</b><small>5 years ago</small></span><span class="gg">G</span></div><div class="stt">★★★★☆</div><p>"One of best in Sapele town."</p></article>
+  <article class="rcd"><div class="rh"><span class="av">S</span><span><b>Salaudeen N.</b><small>Local Guide · 2 years ago</small></span><span class="gg">G</span></div><div class="stt">★★★☆☆</div><p>"Well trained nurses and doctors."</p></article>
+ </div><div class="dots" id="rds" style="justify-content:flex-start"></div></div>
+</div></section>
+
+<!-- ===== 8. Patient stories: the ring of sample videos ===== -->
+<section id="stories" class="rg">
+ <div class="w" style="padding-top:0;padding-bottom:0"><span class="ey rv">Patient stories</span><h2 class="rv">Hear it from them.</h2><p class="lead rv">Turn the ring and press play. Drag it, or use the arrow keys.</p></div>
+ <div class="rgv" id="rgv" tabindex="0" aria-label="Patient stories ring, use arrow keys to turn"><div class="ring" id="ring"></div></div>
+ <p class="rgc" id="rgc"></p>
+</section>
+
+<!-- ===== 9. Facebook ===== -->
+<section id="social" class="w">
+ <div class="igp rv">
+  <div class="igh"><span class="igl"><img src="/i/logo-128.webp" alt="" loading="lazy"></span><span><b>Mascap Hospitals on Facebook</b><small>News and health tips from the hospital.</small></span></div>
+  <div class="ign"><div><b data-c="1100">1,100</b><small>followers</small></div><div><b data-c="2">2</b><small>branches</small></div></div>
+  <div class="cta"><a class="btn fbb" href="https://www.facebook.com/share/1AQ1zNgZQc/" target="_blank" rel="noopener"><i data-i="fb"></i>Follow on Facebook</a><a class="btn o" href="https://wa.me/2348133993514" target="_blank" rel="noopener">Message on WhatsApp</a></div>
+  <div class="igg"><a href="https://www.facebook.com/share/1AQ1zNgZQc/" target="_blank" rel="noopener"><img src="/i/nurses-s.webp" alt="Nurses" loading="lazy" decoding="async"><span>Our nurses</span></a><a href="https://www.facebook.com/share/1AQ1zNgZQc/" target="_blank" rel="noopener"><img src="/i/lab-s.webp" alt="Laboratory" loading="lazy" decoding="async"><span>Laboratory</span></a><a href="https://www.facebook.com/share/1AQ1zNgZQc/" target="_blank" rel="noopener"><img src="/i/pharmacy-s.webp" alt="Pharmacy" loading="lazy" decoding="async" style="object-position:40% center"><span>Pharmacy</span></a></div>
+ </div>
+</section>
+
+<!-- ===== 10. Ask MASCAP ===== -->
+<section id="ask" class="w" style="padding-top:0"><div class="as">
+ <h2 class="hl rv">Ask MASCAP.</h2>
+ <p class="lead rv">Quick answers about booking, the departments and how to find us.</p>
+ <div class="chat rv" role="region" aria-label="MASCAP assistant">
+  <div class="chd"><img src="/i/logo-128.webp" alt="" loading="lazy"><div><strong>MASCAP front desk</strong><span>Replies straight away</span></div></div>
+  <div class="log" id="log" role="log" aria-live="polite"><div class="msg bot">Welcome to MASCAP Hospitals. Ask about booking, the departments or how to find us.</div></div>
+  <div class="cps" id="cps"></div>
+  <form class="cf2" id="cfm" autocomplete="off"><label for="ci" style="position:absolute;left:-9999px">Your question</label><input id="ci" type="text" placeholder="Type your question" maxlength="400"><button class="btn" type="submit">Send</button></form>
+ </div>
+ <span class="tag">Demo: answers come from this page until a live assistant is connected.</span>
+</div></section>
+
+<!-- ===== 11. Contact ===== -->
+<section id="contact" class="w" style="padding-top:0">
+ <h2 class="hl rv">Find us in Sapele.</h2>
+ <div class="ct">
+  <div class="rv">
+   <div class="ro"><span class="ic"><i data-i="pin"></i></span><span><b>Head office</b><small>34 Adeola Road, Sapele, Delta State</small></span></div>
+   <div class="ro"><span class="ic"><i data-i="pin"></i></span><span><b>Branch office</b><small>Egbokodo Road, Sapele, Delta State</small></span></div>
+   <div class="ro"><span class="ic"><i data-i="phone"></i></span><span><b>Hospital</b><small><a href="tel:+2348065911940" data-call>0806 591 1940</a></small></span></div>
+   <div class="ro"><span class="ic"><i data-i="wa"></i></span><span><b>WhatsApp the manager</b><small><a href="https://wa.me/2348133993514" target="_blank" rel="noopener">0813 399 3514</a></small></span></div>
+   <div class="cta" style="margin-top:16px"><a class="btn" href="#book">Book an appointment</a><a class="btn o" href="https://share.google/Wi2GyAlLNoAPE2Poi" target="_blank" rel="noopener">Get directions</a></div>
+  </div>
+  <div class="im rv" style="--d:.1s"><img class="px" data-s=".1" src="/i/reception.webp" alt="The front desk welcoming a mother and her child" loading="lazy" decoding="async"></div>
+ </div>
+</section>
+</main>
+<footer><b>MASCAP</b> · Hospitals, Sapele.<br>34 Adeola Road, and Egbokodo Road, Sapele, Delta State.<br><small>Concept demo prepared for MASCAP Hospitals by StellaXafe Technologies Limited. Not the official website. Photos are samples.</small></footer>
+<div class="fabs"><a class="fab wa" href="https://wa.me/2348133993514" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i data-i="wa"></i></a><a class="fab cl" href="tel:+2348065911940" data-call aria-label="Call the hospital"><i data-i="phone"></i></a></div>
+<div id="sv" role="menu" aria-label="What would you like to book?"><small>What would you like?</small></div>
+<div id="ts" role="status"></div>
+<div id="cs" role="dialog" aria-label="Call MASCAP Hospitals" aria-hidden="true"><div class="cc"><b>Call MASCAP Hospitals</b><div class="big">0806 591 1940</div><a class="btn" href="tel:+2348065911940">Call now</a><button class="btn o" id="cp">Copy number</button><a class="btn g" href="https://wa.me/2348133993514" target="_blank" rel="noopener">WhatsApp the manager</a><button class="btn o" data-x>Close</button></div></div>
+<div id="dv" role="dialog" aria-modal="true" aria-label="Sample video" aria-hidden="true"><div class="cc"><span class="ic2"><i data-i="play"></i></span><b>This is a demo</b><p class="mu" id="dvt">MASCAP's own patient videos go here, each one shared with the patient's written permission.</p><button class="btn" data-dx>Close</button></div></div>
+
+<script src="/a/site.js"></script>
+</body>
+</html>

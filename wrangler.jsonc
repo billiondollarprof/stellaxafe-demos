@@ -1,0 +1,26 @@
+// wrangler.jsonc: how Cloudflare serves the StellaXafe hospital demos.
+//
+// Why: Anthony, 2026-11-27 (request 262): demos live on the StellaXafe
+// Cloudflare account, no database, code in GitHub. One Worker serves every
+// demo; src/worker.js picks the folder from the address.
+//
+// To add a hospital: a folder sites/<name>-web (and later <name>-app), then
+// its addresses below. stellaxafe.com is on the same Cloudflare account, so
+// Cloudflare makes the DNS record and the certificate itself.
+//
+// Never: add a secret or a database binding here. Demos are plain files.
+{
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "stellaxafe-demos",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "sites",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+  },
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "mascap-web.stellaxafe.com", "custom_domain": true },
+  ],
+}
