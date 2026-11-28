@@ -333,3 +333,17 @@ footer .by{display:inline-block;margin-top:6px;opacity:.8;letter-spacing:.02em}
 @keyframes svmore{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 #sv::-webkit-scrollbar{width:6px}#sv::-webkit-scrollbar-thumb{background:var(--gd);border-radius:6px}
 @media(prefers-reduced-motion:reduce){#sv .more span{animation:none}}
+
+/* ===== MASCAP hero, its own look (Anthony, 2026-11-28; request 264) ===== */
+/* A heartbeat line draws itself across the lower hero, then fades and starts again. */
+.ecg{position:absolute;left:50%;bottom:96px;width:max(100%,1100px);height:auto;transform:translateX(-50%);overflow:visible;opacity:.8}
+.ecg .trace{stroke:#ff5a6e;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 0 8px rgba(255,70,95,.85));animation:ecgdraw 5.2s linear infinite}
+.ecg .dot{filter:drop-shadow(0 0 10px #fff)}
+@keyframes ecgdraw{0%{stroke-dashoffset:1;opacity:1}55%{stroke-dashoffset:0;opacity:1}82%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@media(prefers-reduced-motion:reduce){.ecg .trace{animation:none;stroke-dashoffset:0}.ecg .dot{display:none}}
+/* The hero ends in a soft arch with a thin red edge, not a sliding wave. */
+.wv{left:0;width:100%;height:110px;animation:none}
+/* On a phone the heartbeat line gets its own clear band between the buttons and the arch, so it never runs behind a button. */
+@media(max-width:700px){.ecg{width:760px;bottom:64px;opacity:.9}.hero .in{padding-bottom:196px}}
+/* On a computer the label keeps clear of the arrow. */
+@media(min-width:901px){.spl .btn{padding-left:30px;padding-right:84px}}

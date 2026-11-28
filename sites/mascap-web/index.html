@@ -46,10 +46,13 @@
  <div class="hs" id="hs"><picture class="on"><source media="(orientation:portrait)" srcset="/i/reception-p.webp"><img src="/i/reception.webp" alt="" fetchpriority="high" decoding="async"></picture></div>
  <div class="lyr" id="ly1"><span class="orb a"></span><span class="orb b"></span></div>
  <div class="lyr" id="ly2">
-  <svg class="cv" viewBox="0 0 2880 90" preserveAspectRatio="none" fill="none" stroke="rgba(255,190,200,.75)" stroke-width="2"><path d="M0 45Q360 0 720 45T1440 45T2160 45T2880 45"/></svg>
-  <svg class="cv b" viewBox="0 0 2880 90" preserveAspectRatio="none" fill="none" stroke="rgba(150,175,240,.75)" stroke-width="2"><path d="M0 45Q360 90 720 45T1440 45T2160 45T2880 45"/></svg>
+  <!-- A heartbeat line that draws itself, with a small light travelling along it. -->
+  <svg class="ecg" viewBox="0 0 1440 260" fill="none" aria-hidden="true">
+   <path id="ecgp" class="trace" pathLength="1" d="M0 140 h120 l14 -14 l14 14 h26 l10 8 l14 -86 l18 120 l12 -42 h36 l14 -22 l28 22 h110 h120 l14 -14 l14 14 h26 l10 8 l14 -86 l18 120 l12 -42 h36 l14 -22 l28 22 h110 h120 l14 -14 l14 14 h26 l10 8 l14 -86 l18 120 l12 -42 h36 l14 -22 l28 22 h110 h192"/>
+   <circle r="7" fill="#fff" class="dot"><animateMotion dur="5.2s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.55;1" calcMode="linear"><mpath href="#ecgp"/></animateMotion><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.55;0.6;1" dur="5.2s" repeatCount="indefinite"/></circle>
+  </svg>
  </div>
- <svg class="wv" viewBox="0 0 2880 90" preserveAspectRatio="none"><path d="M0 40Q360 -5 720 40T1440 40T2160 40T2880 40V90H0Z" fill="var(--bg)"/></svg>
+ <svg class="wv" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 120V70Q720 -30 1440 70V120Z" fill="var(--bg)"/><path d="M0 70Q720 -30 1440 70" fill="none" stroke="#c8102e" stroke-width="3" vector-effect="non-scaling-stroke" opacity=".9"/></svg>
  <div class="in" id="hin">
   <span class="pill"><i></i><span>Adeola Road and Egbokodo Road, Sapele</span></span>
   <h1>Good care,<br><span class="gt">close to home.</span></h1>
