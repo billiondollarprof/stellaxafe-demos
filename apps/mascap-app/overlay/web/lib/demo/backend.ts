@@ -22,6 +22,17 @@
  */
 import { errorAnswer, handleRest, type Answer, type Db } from './rest'
 
+// ===== 0. Every screen opens at the top =====
+// A phone's browser puts a reloaded page back where it was scrolled. The
+// demo always opens at the top (Anthony, 2026-11-28).
+if (typeof window !== 'undefined') {
+  try {
+    history.scrollRestoration = 'manual'
+  } catch {
+    // Old browser: nothing to change.
+  }
+}
+
 // ===== 1. The database, loaded once and kept on this device =====
 const STORE = 'idb://mascap-demo-1'
 const LOADED_KEY = 'mascap-demo-loaded-1'
@@ -74,6 +85,60 @@ export async function resetDemo() {
     const request = indexedDB.deleteDatabase('/pglite/mascap-demo-1')
     request.onsuccess = request.onerror = request.onblocked = () => done()
   })
+}
+
+// ===== 1b. Get everything ready while the first screen shows =====
+// Downloads the database engine and the made up data once, reporting how
+// far it is (0 to 100), then opens the database. The files stay in the
+// browser's cache, so the app itself does not download them again.
+const FILES = ['pglite/pglite.wasm', 'pglite/pglite.data', 'db.tar.gz']
+let preparing: Promise<void> | null = null
+let progressNow = 0
+const listeners = new Set<(percent: number) => void>()
+
+export function prepareDemo(onProgress: (percent: number) => void): Promise<void> {
+  listeners.add(onProgress)
+  onProgress(progressNow)
+  if (!preparing) {
+    preparing = (async () => {
+      const tell = (percent: number) => {
+        progressNow = percent
+        for (const listener of listeners) listener(percent)
+      }
+      let alreadyHere = false
+      try {
+        alreadyHere = localStorage.getItem(LOADED_KEY) === 'yes'
+      } catch {
+        // Unknown: download.
+      }
+      if (!alreadyHere) {
+        let sizes: Record<string, number> = {}
+        try {
+          sizes = await (await fetch('/demo/sizes.json')).json()
+        } catch {
+          // Without sizes the bar jumps at the end, which is fine.
+        }
+        const total = FILES.reduce((sum, file) => sum + (sizes[file] ?? 0), 0) || 1
+        let done = 0
+        for (const file of FILES) {
+          const response = await fetch('/demo/' + file, { cache: 'force-cache' })
+          const reader = response.body?.getReader()
+          if (!reader) continue
+          for (;;) {
+            const part = await reader.read()
+            if (part.done) break
+            done += part.value.length
+            // Downloading is 85 of the 100; opening the database is the rest.
+            tell(Math.min(85, Math.round((done / total) * 85)))
+          }
+        }
+      }
+      tell(90)
+      await demoDb()
+      tell(100)
+    })()
+  }
+  return preparing
 }
 
 // ===== 2. Every made up date moves forward to today =====

@@ -25,7 +25,8 @@ function folderFor(host) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url)
-    const folder = folderFor(url.hostname)
+    // On a computer (wrangler dev), LOCAL_FOLDER picks the demo instead.
+    const folder = env.LOCAL_FOLDER || folderFor(url.hostname)
     // The app demos ask the server for the time (the real app's Worker does
     // this). Everything else under /api/ is not part of a demo.
     if (url.pathname === '/api/time') {
@@ -37,6 +38,22 @@ export default {
     let path = url.pathname
     if (path.endsWith('/')) path += 'index.html'
     const target = new URL(folder ? `/${folder}${path}` : '/index.html', url.origin)
+    // The database engine's data file is stored compressed (6.3 MB as
+    // 1.9 MB) and sent as it is, with the header that tells the browser.
+    if (folder && path.endsWith('/demo/pglite/pglite.data')) {
+      const packed = await env.ASSETS.fetch(new Request(new URL(`/${folder}${path}.gz`, url.origin), request))
+      if (packed.ok) {
+        return new Response(packed.body, {
+          encodeBody: 'manual',
+          headers: {
+            'Content-Type': 'application/octet-stream',
+            'Content-Encoding': 'gzip',
+            'Cache-Control': 'public, max-age=86400',
+            'X-Robots-Tag': 'noindex, nofollow',
+          },
+        })
+      }
+    }
     let response = await env.ASSETS.fetch(new Request(target, request))
     // An address inside the demo that is not a file gets the demo's page.
     if (response.status === 404 && folder) {
@@ -47,6 +64,9 @@ export default {
     out.headers.set('X-Content-Type-Options', 'nosniff')
     out.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
     out.headers.set('X-Frame-Options', 'SAMEORIGIN')
+    // The demo's big files are kept by the browser for a day, so the app
+    // never downloads them twice while a visitor looks around.
+    if (path.includes('/demo/')) out.headers.set('Cache-Control', 'public, max-age=86400')
     return out
   },
 }

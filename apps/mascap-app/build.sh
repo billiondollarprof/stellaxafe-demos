@@ -31,7 +31,7 @@ python3 "$HERE/icons.py" "$ROOT/sites/mascap-web/i/logo-256.webp" "$WORK/rhema/w
 # ===== 3. Build the app =====
 cd "$WORK/rhema"
 npm ci --silent
-( cd web && NEXT_PUBLIC_SUPABASE_URL=https://demo.invalid NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=demo NEXT_PUBLIC_BRAND=mascap npm run build )
+( cd web && NEXT_PUBLIC_SUPABASE_URL=https://demo.invalid NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=demo NEXT_PUBLIC_BRAND=mascap NEXT_PUBLIC_DEMO=1 npm run build )
 node scripts/pitch-brand.mjs mascap
 
 # ===== 4. The database and PGlite beside the app =====
@@ -41,6 +41,10 @@ node "$HERE/build-db.mjs" "$WORK/rhema" web/out/demo/db.tar.gz
 P="$HERE/node_modules/@electric-sql/pglite/dist"
 cp "$P"/*.js "$P"/*.wasm "$P"/*.data "$P"/pgcrypto.tar.gz "$P"/uuid-ossp.tar.gz web/out/demo/pglite/
 cp "$P"/contrib/pgcrypto.js "$P"/contrib/uuid_ossp.js web/out/demo/pglite/contrib/
+# pglite.data is sent compressed (6.3 MB becomes 1.9 MB); the Worker says so.
+gzip -9 -n web/out/demo/pglite/pglite.data
+# The sizes, for the progress line on the first screen.
+node -e "const fs=require('fs');const d='web/out/demo/';const s=f=>fs.statSync(d+f).size;fs.writeFileSync(d+'sizes.json',JSON.stringify({'pglite/pglite.wasm':s('pglite/pglite.wasm'),'pglite/pglite.data':require('zlib').gunzipSync(fs.readFileSync(d+'pglite/pglite.data.gz')).length,'db.tar.gz':s('db.tar.gz')}))"
 
 # ===== 5. Let WebAssembly run (PGlite needs it), from this address only =====
 sed -i "s/script-src 'self' 'unsafe-inline';/script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval';/" web/out/_headers

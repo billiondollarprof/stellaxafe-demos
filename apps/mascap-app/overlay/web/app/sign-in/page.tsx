@@ -14,7 +14,7 @@
  */
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import AppLoading from '@/components/shell/AppLoading'
 import Logo from '@/components/brand/Logo'
@@ -23,7 +23,7 @@ import styles from '@/components/auth/Auth.module.css'
 import { useRightPage } from '@/lib/auth/routes'
 import { useAuth } from '@/lib/auth/session'
 import { BRAND } from '@/lib/brand/brand'
-import { demoSession, resetDemo } from '@/lib/demo/backend'
+import { demoSession, prepareDemo, resetDemo } from '@/lib/demo/backend'
 
 // ===== 1. The made up people, one per role =====
 const PEOPLE = [
@@ -66,6 +66,14 @@ export default function DemoSignInPage() {
   useRightPage(auth.status, '/sign-in/')
   const [busy, setBusy] = useState<string | null>(null)
   const [resetting, setResetting] = useState(false)
+  // How far the demo is with getting ready (0 to 100). It starts the moment
+  // this screen shows, so most of it is done before a role is picked
+  // (Anthony, 2026-11-28: "it took long to open").
+  const [percent, setPercent] = useState(0)
+  useEffect(() => {
+    void prepareDemo(setPercent)
+  }, [])
+  const ready = percent >= 100
 
   if (auth.status === 'ready') return <AppLoading />
 
@@ -76,19 +84,25 @@ export default function DemoSignInPage() {
         <Logo size={72} className={styles.logo} />
         <h2>{BRAND.name}</h2>
         <p className={styles.lead}>Demo. Pick a role to see the hospital app as that person.</p>
+        {!ready ? (
+          <p className={styles.note} role="status">
+            Getting the demo ready… {percent}%. The first time takes a few seconds on a phone.
+          </p>
+        ) : null}
         <div className={styles.people}>
           {PEOPLE.map((person) => (
             <button
               key={person.id}
               className={styles.person}
               disabled={busy !== null}
-              onClick={() => {
+              onClick={async () => {
                 setBusy(person.id)
+                await prepareDemo(setPercent)
                 enter(person)
               }}
             >
               <span>
-                <b>{busy === person.id ? 'Opening…' : person.label}</b>
+                <b>{busy === person.id ? (ready ? 'Opening…' : `Getting ready… ${percent}%`) : person.label}</b>
                 <small>{person.what}</small>
               </span>
             </button>

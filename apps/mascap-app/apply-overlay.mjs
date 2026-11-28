@@ -57,4 +57,61 @@ change(
   "    name: 'MASCAP Medical Centre',\n    short: 'MASCAP',\n    initials: 'MA',\n    address: '',",
   "    name: 'MASCAP Hospitals',\n    short: 'MASCAP',\n    initials: null,\n    address: '34 Adeola Road, Sapele, Delta State',",
 )
+
+// The install card: two equal buttons, Install and Not now (Anthony,
+// 2026-11-28: "two buttons side by side... a border button"). The call
+// alerts step never shows: alerts need a server, and the demo has none.
+change(
+  'web/components/onboarding/OnboardingGate.tsx',
+  `            >
+              <button className={styles.skip} onClick={skip} style={{ animationDelay: '1.1s' }}>
+                Already installed {BRAND.short} on this {device}? Tap here to skip this.
+              </button>
+            </Explain>
+            <button className={styles.primary} onClick={install} disabled={busy}>
+              {busy ? 'Installing…' : 'Install'}
+            </button>`,
+  `            />
+            <div className={styles.demoRow}>
+              <button className={styles.demoOutline} onClick={skip}>
+                Not now
+              </button>
+              <button className={styles.primary} onClick={install} disabled={busy}>
+                {busy ? 'Installing…' : 'Install'}
+              </button>
+            </div>`,
+)
+change(
+  'web/components/onboarding/OnboardingGate.tsx',
+  '  // Installed (or a browser that cannot install): now the alerts.',
+  "  // The demo: no alerts step (no server to send them).\n  if (process.env.NEXT_PUBLIC_DEMO === '1') return 'done'\n  // Installed (or a browser that cannot install): now the alerts.",
+)
+{
+  const css = join(copy, 'web/components/onboarding/onboarding.module.css')
+  writeFileSync(
+    css,
+    readFileSync(css, 'utf8') +
+      `
+/* Demo build: Not now and Install side by side, the same size. */
+.demoRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+.demoOutline {
+  font: inherit;
+  font-weight: 700;
+  font-size: 16px;
+  min-height: 50px;
+  border: 2px solid #1f5fd0;
+  border-radius: 14px;
+  color: #1f5fd0;
+  background: #fff;
+  cursor: pointer;
+}
+`,
+  )
+}
+
 console.log('Demo layer applied to', copy)

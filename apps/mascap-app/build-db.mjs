@@ -46,7 +46,11 @@ const counts = await db.query(`select (select count(*) from public.patients) pat
   (select count(*) from public.staff) staff, (select count(*) from public.queue_entries) queue`)
 console.log('Made up data:', counts.rows[0], `(${migrations.length} migrations)`)
 
-// ===== 4. Save it as one compressed file =====
+// ===== 4. Everything written to the tables, so the log adds nothing =====
+// (VACUUM FULL was tried: it made the file bigger, 8.4 MB against 6 MB.)
+await db.query('checkpoint')
+
+// ===== 5. Save it as one compressed file =====
 const file = await db.dumpDataDir('gzip')
 writeFileSync(out, Buffer.from(await file.arrayBuffer()))
 console.log('Saved', out, Math.round(file.size / 1024), 'KB')
