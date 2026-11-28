@@ -114,4 +114,26 @@ change(
   )
 }
 
+// Demo sign in without reloading the page: the sign in page says who, and
+// the session opens them at once, so the database that is already open in
+// this page is used straight away (Anthony, 2026-11-28: "make the app load
+// faster").
+change(
+  'web/lib/auth/session.tsx',
+  '  }, [activate, finishSignIn, signOutHere])\n',
+  `  }, [activate, finishSignIn, signOutHere])
+
+  // ----- Demo build: the role picked on the first screen opens at once -----
+  useEffect(() => {
+    function demoEnter(event: Event) {
+      const id = (event as CustomEvent<string>).detail
+      setActiveId(id)
+      void activate(id)
+    }
+    window.addEventListener('demo-enter', demoEnter)
+    return () => window.removeEventListener('demo-enter', demoEnter)
+  }, [activate])
+`,
+)
+
 console.log('Demo layer applied to', copy)
