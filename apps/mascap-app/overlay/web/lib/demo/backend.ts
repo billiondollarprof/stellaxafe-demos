@@ -75,15 +75,30 @@ export function demoDb(): Promise<Db> {
 }
 
 // Start over: the made up data as it was (the "Reset the demo" button).
+// The open database is closed first: a browser will not delete a database
+// that is still open, and waits for ever (the "Starting again…" that never
+// finished, 2026-11-28). Then the made up data loads fresh on the reload.
 export async function resetDemo() {
   try {
     localStorage.removeItem(LOADED_KEY)
   } catch {
     // Nothing to remove.
   }
+  if (ready) {
+    try {
+      const db = (await ready) as Db & { close?: () => Promise<void> }
+      await db.close?.()
+    } catch {
+      // It never opened: nothing to close.
+    }
+    ready = null
+    preparing = null
+  }
   await new Promise<void>((done) => {
     const request = indexedDB.deleteDatabase('/pglite/mascap-demo-1')
-    request.onsuccess = request.onerror = request.onblocked = () => done()
+    request.onsuccess = request.onerror = () => done()
+    // Still blocked after 3 seconds: carry on; the reload frees it.
+    setTimeout(done, 3000)
   })
 }
 

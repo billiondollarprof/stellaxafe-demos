@@ -64,7 +64,9 @@ function enter(person: (typeof PEOPLE)[number]) {
 export default function DemoSignInPage() {
   const auth = useAuth()
   useRightPage(auth.status, '/sign-in/')
-  const [busy, setBusy] = useState<string | null>(null)
+  const [busy, setBusy] = useState(false)
+  const [chosen, setChosen] = useState(PEOPLE[0].id)
+  const picked = PEOPLE.find((person) => person.id === chosen) ?? PEOPLE[0]
   const [resetting, setResetting] = useState(false)
   // How far the demo is with getting ready (0 to 100). It starts the moment
   // this screen shows, so most of it is done before a role is picked
@@ -86,28 +88,41 @@ export default function DemoSignInPage() {
         <p className={styles.lead}>Demo. Pick a role to see the hospital app as that person.</p>
         {!ready ? (
           <p className={styles.note} role="status">
-            Getting the demo ready… {percent}%. The first time takes a few seconds on a phone.
+            Getting the demo ready: {percent}%. The first time takes a few seconds on a phone.
           </p>
         ) : null}
-        <div className={styles.people}>
+        {/* One drop down for the role, so the screen stays clear (Anthony,
+            2026-11-28: "make the role a drop down"). */}
+        <label className={styles.label} htmlFor="demo-role">
+          Role
+        </label>
+        <select
+          id="demo-role"
+          className={styles.input}
+          value={chosen}
+          disabled={busy}
+          onChange={(event) => setChosen(event.target.value)}
+        >
           {PEOPLE.map((person) => (
-            <button
-              key={person.id}
-              className={styles.person}
-              disabled={busy !== null}
-              onClick={async () => {
-                setBusy(person.id)
-                await prepareDemo(setPercent)
-                enter(person)
-              }}
-            >
-              <span>
-                <b>{busy === person.id ? (ready ? 'Opening…' : `Getting ready… ${percent}%`) : person.label}</b>
-                <small>{person.what}</small>
-              </span>
-            </button>
+            <option key={person.id} value={person.id}>
+              {person.label}
+            </option>
           ))}
-        </div>
+        </select>
+        <p className={styles.note}>
+          {picked.name}: {picked.what.toLowerCase()}.
+        </p>
+        <button
+          className={`${styles.button} ${styles.primary}`}
+          disabled={busy}
+          onClick={async () => {
+            setBusy(true)
+            await prepareDemo(setPercent)
+            enter(picked)
+          }}
+        >
+          {busy ? (ready ? 'Opening…' : `Getting ready… ${percent}%`) : `Open as ${picked.label}`}
+        </button>
         <p className={styles.note}>
           Made up patients only. What you save stays on this device. The PIN for every role is 1234.
         </p>
