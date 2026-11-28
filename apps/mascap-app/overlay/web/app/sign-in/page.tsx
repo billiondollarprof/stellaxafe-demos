@@ -57,7 +57,9 @@ function enter(person: (typeof PEOPLE)[number]) {
   } catch {
     // Storage blocked: the demo cannot remember anybody in this window.
   }
-  window.location.href = '/'
+  // Open them now, in this page: no reload, so the database that is
+  // already open here is used (lib/auth/session.tsx, demo-enter).
+  window.dispatchEvent(new CustomEvent('demo-enter', { detail: person.id }))
 }
 
 // ===== 3. The page =====
@@ -86,29 +88,97 @@ export default function DemoSignInPage() {
         <Logo size={72} className={styles.logo} />
         <h2>{BRAND.name}</h2>
         <p className={styles.lead}>Demo. Pick a role to see the hospital app as that person.</p>
+        {/* ===== The progress bar, big and plain (Anthony, 2026-11-28: "make
+            the progress bar more visible... tell the person to hold on") ===== */}
         {!ready ? (
-          <p className={styles.note} role="status">
-            Getting the demo ready: {percent}%. The first time takes a few seconds on a phone.
-          </p>
+          <div
+            role="status"
+            style={{
+              margin: '14px 0 6px',
+              padding: '14px 16px',
+              borderRadius: 16,
+              background: '#eef4ff',
+              border: '1px solid #c9dafc',
+              textAlign: 'left',
+            }}
+          >
+            <b style={{ display: 'flex', justifyContent: 'space-between', color: '#0d1b3d' }}>
+              <span>Please hold on</span>
+              <span>{percent}%</span>
+            </b>
+            <div
+              aria-hidden="true"
+              style={{ height: 12, borderRadius: 99, background: '#d6e2f8', overflow: 'hidden', margin: '10px 0' }}
+            >
+              <div
+                style={{
+                  height: '100%',
+                  width: `${Math.max(4, percent)}%`,
+                  borderRadius: 99,
+                  background: 'linear-gradient(90deg, #1f5fd0, #c8102e)',
+                  transition: 'width .4s ease',
+                }}
+              />
+            </div>
+            <small style={{ display: 'block', color: '#3c4a66', lineHeight: 1.5 }}>
+              This demo runs completely on your phone, so the first time it loads the whole hospital
+              system into your phone. A fast network helps. After this, it opens quickly.
+            </small>
+          </div>
         ) : null}
         {/* One drop down for the role, so the screen stays clear (Anthony,
             2026-11-28: "make the role a drop down"). */}
         <label className={styles.label} htmlFor="demo-role">
-          Role
+          Choose a role (tap to see them all)
         </label>
-        <select
-          id="demo-role"
-          className={styles.input}
-          value={chosen}
-          disabled={busy}
-          onChange={(event) => setChosen(event.target.value)}
-        >
-          {PEOPLE.map((person) => (
-            <option key={person.id} value={person.id}>
-              {person.label}
-            </option>
-          ))}
-        </select>
+        {/* The arrow is big, blue and moves gently, so it is clear the box
+            opens (Anthony, 2026-11-28: "make it more visible... animate it"). */}
+        <div style={{ position: 'relative' }}>
+          <style>{`@keyframes demoNudge{0%,100%{transform:translateY(-50%)}50%{transform:translateY(-30%)}}`}</style>
+          <select
+            id="demo-role"
+            className={styles.input}
+            value={chosen}
+            disabled={busy}
+            onChange={(event) => setChosen(event.target.value)}
+            style={{
+              appearance: 'none',
+              WebkitAppearance: 'none',
+              paddingRight: 64,
+              fontWeight: 700,
+              border: '2px solid #1f5fd0',
+              cursor: 'pointer',
+            }}
+          >
+            {PEOPLE.map((person) => (
+              <option key={person.id} value={person.id}>
+                {person.label}
+              </option>
+            ))}
+          </select>
+          <span
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              right: 10,
+              top: '50%',
+              width: 40,
+              height: 40,
+              borderRadius: 12,
+              background: '#1f5fd0',
+              color: '#fff',
+              display: 'grid',
+              placeItems: 'center',
+              pointerEvents: 'none',
+              animation: busy ? 'none' : 'demoNudge 1.4s ease-in-out infinite',
+              transform: 'translateY(-50%)',
+            }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </span>
+        </div>
         <p className={styles.note}>
           {picked.name}: {picked.what.toLowerCase()}.
         </p>
