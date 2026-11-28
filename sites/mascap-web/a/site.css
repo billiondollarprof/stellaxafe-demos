@@ -326,10 +326,10 @@ footer b{color:var(--gd);letter-spacing:.22em}
 footer .by{display:inline-block;margin-top:6px;opacity:.8;letter-spacing:.02em}
 
 /* The tray says there is more below: a fade and a small bouncing arrow, gone once the end is reached. */
-#sv .more{position:sticky;bottom:-8px;height:58px;margin:-58px -8px -8px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:9px;border-radius:0 0 22px 22px;background:linear-gradient(transparent,var(--sf) 66%);pointer-events:none;transition:opacity .25s}
+#sv .more{position:sticky;bottom:-8px;height:58px;width:calc(100% + 16px);margin:-58px -8px -8px;display:flex;align-items:flex-end;justify-content:center;padding:0 0 9px;border:0;border-radius:0 0 22px 22px;background:linear-gradient(transparent,var(--sf) 66%);cursor:pointer;transition:opacity .25s}#sv .more:hover{background:linear-gradient(transparent,var(--bg2) 66%)}
 #sv .more span{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gd);animation:svmore 1.3s ease-in-out infinite}
 #sv .more svg{width:15px;height:15px}
-#sv.end .more{opacity:0}
+#sv.end .more{opacity:0;pointer-events:none}
 @keyframes svmore{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 #sv::-webkit-scrollbar{width:6px}#sv::-webkit-scrollbar-thumb{background:var(--gd);border-radius:6px}
 @media(prefers-reduced-motion:reduce){#sv .more span{animation:none}}
@@ -347,3 +347,35 @@ footer .by{display:inline-block;margin-top:6px;opacity:.8;letter-spacing:.02em}
 @media(max-width:700px){.ecg{width:760px;bottom:64px;opacity:.9}.hero .in{padding-bottom:196px}}
 /* On a computer the label keeps clear of the arrow. */
 @media(min-width:901px){.spl .btn{padding-left:30px;padding-right:84px}}
+
+/* ===== The card stack on a landscape screen (Anthony, 2026-11-28) =====
+   Wide screens are short, so the heading goes to the left and the cards to
+   the right, and the cards are sized to the screen's height. The whole
+   section then fits on one screen. */
+@media (min-aspect-ratio:1/1) and (min-width:640px){
+  .fan{margin:16px 12px}
+  .fan .w{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);column-gap:24px;align-items:center;padding:34px 30px 30px}
+  .fan .w>.ey,.fan .w>h2,.fan .w>.lead{grid-column:1}
+  .fan .deck{grid-column:2;grid-row:1/span 3;height:clamp(240px,66svh,430px);margin-top:0}
+  .fan .dots{grid-column:2;grid-row:4;margin-top:12px}
+  .fan .fc{width:calc(clamp(240px,66svh,430px)*.66)}
+  .fan .fi h3{font-size:clamp(1.05rem,3svh,1.45rem)}
+  .fan .fi p{font-size:clamp(.74rem,2.3svh,.86rem);margin:3px 0 8px}
+  .fan .fi .btn{min-height:36px;padding:6px 16px}
+}
+
+/* ===== A phone held sideways: a short screen (Anthony, 2026-11-28) ===== */
+@media (orientation:landscape) and (max-height:520px){
+  .hero .in{padding-bottom:84px}
+  .hero h1{font-size:clamp(2rem,12svh,3.2rem)}
+  .hero p.lead{font-size:1rem;margin-bottom:16px}
+  .ecg{bottom:36px}
+  .wv{height:70px}
+  .hint{display:none}
+  .log{height:clamp(150px,38svh,320px);min-height:150px}
+}
+/* The chat never needs more than the screen can show. */
+@media (min-aspect-ratio:1/1){.log{height:clamp(160px,36svh,340px);min-height:160px}}
+/* The floating buttons step aside while the booking form is on screen, so they never cover Continue. */
+.fabs{transition:opacity .25s,transform .25s}
+.fabs.away{opacity:0;pointer-events:none;transform:translateX(24px)}
