@@ -25,5 +25,6 @@
   "workers_dev": true,
   "routes": [
     { "pattern": "mascap-web.stellaxafe.com", "custom_domain": true },
+    { "pattern": "mascap-app.stellaxafe.com", "custom_domain": true },
   ],
 }

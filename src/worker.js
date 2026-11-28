@@ -26,6 +26,14 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url)
     const folder = folderFor(url.hostname)
+    // The app demos ask the server for the time (the real app's Worker does
+    // this). Everything else under /api/ is not part of a demo.
+    if (url.pathname === '/api/time') {
+      return Response.json({ now: Date.now() }, { headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex, nofollow' } })
+    }
+    if (url.pathname.startsWith('/api/')) {
+      return Response.json({ error: 'Not part of the demo' }, { status: 404, headers: { 'X-Robots-Tag': 'noindex, nofollow' } })
+    }
     let path = url.pathname
     if (path.endsWith('/')) path += 'index.html'
     const target = new URL(folder ? `/${folder}${path}` : '/index.html', url.origin)

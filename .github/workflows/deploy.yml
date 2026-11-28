@@ -48,7 +48,7 @@ jobs:
       - name: Check the demos answer
         if: steps.ready.outputs.go == 'yes'
         run: |
-          for url in https://mascap-web.stellaxafe.com/; do
+          for url in https://mascap-web.stellaxafe.com/ https://mascap-app.stellaxafe.com/sign-in/; do
             ok=no
             for i in $(seq 1 30); do
               if curl -fsS -o /dev/null "$url"; then ok=yes; break; fi

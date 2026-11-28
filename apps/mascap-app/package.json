@@ -1,0 +1,9 @@
+{
+  "name": "mascap-app-demo-builder",
+  "private": true,
+  "type": "module",
+  "description": "Builds the MASCAP demo app's database (PGlite). See build.sh.",
+  "dependencies": {
+    "@electric-sql/pglite": "0.6.1"
+  }
+}
