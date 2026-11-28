@@ -115,7 +115,7 @@ export default function DemoSignInPage() {
   return (
     <main className={styles.page}>
       <SignInPhotos />
-      <style>{`@keyframes demoNudge{0%,100%{transform:translateY(-50%)}50%{transform:translateY(-25%)}}`}</style>
+      <style>{`@keyframes demoNudge{0%,100%{transform:translateY(-50%)}50%{transform:translateY(-38%)}}`}</style>
       <section className={`${styles.card} ${styles.overPhotos}`} style={{ textAlign: 'left' }}>
         {/* ----- 4a. Who: the logo, the name, a small Demo tag ----- */}
         <div style={{ display: 'grid', justifyItems: 'center', gap: 8, marginBottom: 18 }}>
