@@ -324,3 +324,12 @@ footer b{color:var(--gd);letter-spacing:.22em}
 .rc>span{background:linear-gradient(transparent,rgba(4,10,30,.55) 25%,rgba(4,10,30,.95))!important;padding-top:46px!important}
 #dv .cc{transform:translateY(16px);transition:transform .4s var(--e)}#dv.on .cc{transform:none}
 footer .by{display:inline-block;margin-top:6px;opacity:.8;letter-spacing:.02em}
+
+/* The tray says there is more below: a fade and a small bouncing arrow, gone once the end is reached. */
+#sv .more{position:sticky;bottom:-8px;height:58px;margin:-58px -8px -8px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:9px;border-radius:0 0 22px 22px;background:linear-gradient(transparent,var(--sf) 66%);pointer-events:none;transition:opacity .25s}
+#sv .more span{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gd);animation:svmore 1.3s ease-in-out infinite}
+#sv .more svg{width:15px;height:15px}
+#sv.end .more{opacity:0}
+@keyframes svmore{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+#sv::-webkit-scrollbar{width:6px}#sv::-webkit-scrollbar-thumb{background:var(--gd);border-radius:6px}
+@media(prefers-reduced-motion:reduce){#sv .more span{animation:none}}
